@@ -1,0 +1,13 @@
+{
+  "type": "m1",
+  "input": {
+    "cardId": "abc",
+    "start": "2017-03-29 05:20:31",
+    "end": "2017-03-30 15:20:40"
+  },
+  "expected": {
+    "cost": 2040.0
+  },
+  "normal": true,
+  "description": ""
+}

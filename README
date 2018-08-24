@@ -1,0 +1,61 @@
+MoonPark project:
+
+This project applied Abstract factory and singleton pattern for service
+Spec:   MoonPark-Sequence-Diagram.png
+	MoonPark-Class-Diagram.png
+
+
+Bootstrap: MoonParkApplication.java
+IDE: Intellij
+Project: Maven - SprintBoot 1.5.2.RELEASE
+JavDoc: ~JavaDoc/index.html
+Just demo without database
+
+
+-------------------------------------------------------------------------------------------------------------
+UnitTest:
+ Auto generation test case file.
+        Generate MoonParkUnitTests.java by template file: src/test/java/com/example/template/test-case-template.txt
+       Testing base on json file, it can be test for restFull API (org.springframework.boot.test.web.client.TestRestTemplate).
+           for example:
+           {
+             "type": "m1",                             // parking zone
+             "input": {                                // input param
+               "cardId": "abc",
+               "start": "2017-03-29 05:20:31",
+               "end": "2017-03-29 15:20:31"
+             },
+             "expected": {                             // expected result
+               "cost": 600.0
+             },
+             "normal": true,                           // normal or abnormal test case
+             "description": "start time and end time"  // test case info
+           }
+
+
+  How to Run UnitTest:
+	step1: determine your case and create file with format [name].json at src/test/java/com/example/Test-Data/
+	    note: file name is method name
+	step2:
+	    Execute main method in src/test/java/com/example/TestCaseJavaFileGenerator.java
+	    it create file src/test/java/com/example/MoonParkUnitTests.java
+	    note: if you create new json file, please do this step again.
+	step3:
+	   go to src/test/java/com/example/MoonParkUnitTests.java and run UnitTest
+
+
+-----------------------------------------------------------------------------------------------------------------
+Task 5:
+Firstly we must improved MoonPark performance:
+    Increase heap size of JVM when deployed (note: not over total RAM/2, or 32Gb).
+    Deploy load balancing web system, use database  cluster, apply caching cluster (recommended Redis) for reduced db query.
+    Protect against DoS, DDoS, brute force attack: config at webserver application.
+	+ refer: 
+		https://lincolnloop.com/blog/rate-limiting-nginx/
+		http://nginx.org/en/docs/http/ngx_http_limit_req_module.html
+		https://www.digitalocean.com/community/tutorials/how-to-protect-against-dos-and-ddos-with-mod_evasive-for-apache-on-centos-7
+		
+Secondly control by code:
+    Add secret http-header (protected Clickjacking), username/password to hidden with stranger.
+    Limit traffic per user (request/sec): apply Observer pattern, HandlerInterceptor, or Filter of servlet.
+
